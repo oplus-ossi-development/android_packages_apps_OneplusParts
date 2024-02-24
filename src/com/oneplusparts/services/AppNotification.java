@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

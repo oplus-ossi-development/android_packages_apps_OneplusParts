@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.content.Context;
 import android.content.Intent;
@@ -203,7 +203,7 @@ public class Utils {
     public static String getStringForResourceName(final Resources res,
                                                   final String resourceName,
                                                   final String defaultValue) {
-        final int resId = res.getIdentifier(resourceName, "string", "com.realmeparts");
+        final int resId = res.getIdentifier(resourceName, "string", "com.oneplusparts");
         if (resId <= 0) {
             Log.e(TAG, "No resource found for " + resourceName);
             return defaultValue;

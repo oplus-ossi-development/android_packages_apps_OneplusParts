@@ -15,25 +15,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.UserHandle;
-import android.util.Log;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 
-public class HBMModeSwitch implements OnPreferenceChangeListener {
+public class DCModeSwitch implements OnPreferenceChangeListener {
 
-    private static final String FILE = "/sys/kernel/oplus_display/hbm";
-    private static Context mContext;
-
-    public HBMModeSwitch(Context context) {
-        mContext = context;
-    }
+    private static final String FILE = "/sys/kernel/oplus_display/dimlayer_bl_en";
 
     public static String getFile() {
         if (Utils.fileWritable(FILE)) {
@@ -50,19 +41,10 @@ public class HBMModeSwitch implements OnPreferenceChangeListener {
         return Utils.getFileValueAsBoolean(getFile(), false);
     }
 
-    public static void TriggerService(boolean enabled, Context context) {
-        if (enabled) {
-            Utils.startService(context, com.realmeparts.HBMService.class);
-        } else if (!enabled) {
-            Utils.stopService(context, com.realmeparts.HBMService.class);
-        }
-    }
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         Boolean enabled = (Boolean) newValue;
         Utils.writeValue(getFile(), enabled ? "1" : "0");
-        TriggerService(enabled, mContext);
         return true;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The OmniROM Project
+ * Copyright (C) 2020 The LineageOS Project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,16 +15,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.content.Context;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 
-public class DCModeSwitch implements OnPreferenceChangeListener {
+public class OTGModeSwitch implements OnPreferenceChangeListener {
 
-    private static final String FILE = "/sys/kernel/oplus_display/dimlayer_bl_en";
+    private static final String FILE = "/sys/devices/virtual/oplus_chg/usb/otg_switch";
 
     public static String getFile() {
         if (Utils.fileWritable(FILE)) {

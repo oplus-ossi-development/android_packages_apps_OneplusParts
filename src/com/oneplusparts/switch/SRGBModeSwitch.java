@@ -16,7 +16,7 @@
  *
  */
 
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.content.Context;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2018 The OmniROM Project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.realmeparts;
+
+package com.oneplusparts;
 
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
@@ -25,7 +26,7 @@ import android.service.quicksettings.TileService;
 import androidx.preference.PreferenceManager;
 
 @TargetApi(24)
-public class SRGBModeTileService extends TileService {
+public class HBMModeTileService extends TileService {
     private boolean enabled = false;
 
     @Override
@@ -48,10 +49,10 @@ public class SRGBModeTileService extends TileService {
         super.onStartListening();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        enabled = SRGBModeSwitch.isCurrentlyEnabled(this);
+        enabled = HBMModeSwitch.isCurrentlyEnabled(this);
         getQsTile().setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
-        getQsTile().setLabel(getResources().getString(R.string.tile_srgb_mode));
-
+        getQsTile().setLabel(getResources().getString(R.string.tile_hbm_mode));
+			
         getQsTile().updateTile();
     }
 
@@ -64,9 +65,11 @@ public class SRGBModeTileService extends TileService {
     public void onClick() {
         super.onClick();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        enabled = SRGBModeSwitch.isCurrentlyEnabled(this);
-        Utils.writeValue(SRGBModeSwitch.getFile(), enabled ? "0" : "1");
-        sharedPrefs.edit().putBoolean(DeviceSettings.KEY_SRGB_SWITCH, !enabled).apply();
+        enabled = HBMModeSwitch.isCurrentlyEnabled(this);
+        Utils.writeValue(HBMModeSwitch.getFile(), enabled ? "0" : "1");
+        HBMModeSwitch.TriggerService(!enabled, this);
+        sharedPrefs.edit().putBoolean(DeviceSettings.KEY_HBM_SWITCH, !enabled).apply();
+        //getQsTile().setLabel(enabled ? "HBM off" : "HBM On");
         getQsTile().setState(enabled ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE);
         getQsTile().updateTile();
     }

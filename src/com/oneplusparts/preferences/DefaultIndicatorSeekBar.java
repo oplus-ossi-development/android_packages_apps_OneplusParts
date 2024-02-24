@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.content.Context;
 import android.util.AttributeSet;

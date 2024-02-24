@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The OmniROM Project
+ * Copyright (C) 2020 The LineageOS Project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.realmeparts;
+package com.oneplusparts;
 
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
@@ -25,7 +25,7 @@ import android.service.quicksettings.TileService;
 import androidx.preference.PreferenceManager;
 
 @TargetApi(24)
-public class DCModeTileService extends TileService {
+public class SRGBModeTileService extends TileService {
     private boolean enabled = false;
 
     @Override
@@ -47,13 +47,12 @@ public class DCModeTileService extends TileService {
     public void onStartListening() {
         super.onStartListening();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
-        enabled = DCModeSwitch.isCurrentlyEnabled(this);
-        getQsTile().setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
-        getQsTile().setLabel(getResources().getString(R.string.tile_dc_mode));
-			
-        getQsTile().updateTile();
 
+        enabled = SRGBModeSwitch.isCurrentlyEnabled(this);
+        getQsTile().setState(enabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+        getQsTile().setLabel(getResources().getString(R.string.tile_srgb_mode));
+
+        getQsTile().updateTile();
     }
 
     @Override
@@ -65,10 +64,9 @@ public class DCModeTileService extends TileService {
     public void onClick() {
         super.onClick();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        enabled = DCModeSwitch.isCurrentlyEnabled(this);
-        Utils.writeValue(DCModeSwitch.getFile(), enabled ? "0" : "1");
-        sharedPrefs.edit().putBoolean(DeviceSettings.KEY_DC_SWITCH, !enabled).commit();
-        //getQsTile().setLabel(enabled ? "DC off" : "DC On");
+        enabled = SRGBModeSwitch.isCurrentlyEnabled(this);
+        Utils.writeValue(SRGBModeSwitch.getFile(), enabled ? "0" : "1");
+        sharedPrefs.edit().putBoolean(DeviceSettings.KEY_SRGB_SWITCH, !enabled).apply();
         getQsTile().setState(enabled ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE);
         getQsTile().updateTile();
     }

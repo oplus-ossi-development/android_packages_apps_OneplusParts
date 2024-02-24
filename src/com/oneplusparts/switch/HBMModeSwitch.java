@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2016 The OmniROM Project
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,16 +15,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.realmeparts;
+
+package com.oneplusparts;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.UserHandle;
+import android.util.Log;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 
-public class OTGModeSwitch implements OnPreferenceChangeListener {
+public class HBMModeSwitch implements OnPreferenceChangeListener {
 
-    private static final String FILE = "/sys/devices/virtual/oplus_chg/usb/otg_switch";
+    private static final String FILE = "/sys/kernel/oplus_display/hbm";
+    private static Context mContext;
+
+    public HBMModeSwitch(Context context) {
+        mContext = context;
+    }
 
     public static String getFile() {
         if (Utils.fileWritable(FILE)) {
@@ -41,10 +50,19 @@ public class OTGModeSwitch implements OnPreferenceChangeListener {
         return Utils.getFileValueAsBoolean(getFile(), false);
     }
 
+    public static void TriggerService(boolean enabled, Context context) {
+        if (enabled) {
+            Utils.startService(context, com.oneplusparts.HBMService.class);
+        } else if (!enabled) {
+            Utils.stopService(context, com.oneplusparts.HBMService.class);
+        }
+    }
+
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         Boolean enabled = (Boolean) newValue;
         Utils.writeValue(getFile(), enabled ? "1" : "0");
+        TriggerService(enabled, mContext);
         return true;
     }
 }

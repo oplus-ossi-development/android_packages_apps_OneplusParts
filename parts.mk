@@ -1,6 +1,6 @@
-LOCAL_PATH := packages/apps/RealmeParts
+LOCAL_PATH := packages/apps/OneplusParts
 
-# RealmeParts
+# OneplusParts
 PRODUCT_PACKAGES += \
-    RealmeParts \
-	parts.rc
+    OneplusParts \
+    parts.rc
